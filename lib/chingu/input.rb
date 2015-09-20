@@ -95,6 +95,21 @@ module Chingu
       KbISO             => [:kb_ISO]
     }
 
+    # MSOther, 0-7
+    (0..7).each do |n|
+      CONSTANT_TO_SYMBOL[eval "MsOther#{n}"] = [:"ms_other_#{n}"]
+    end
+
+    # Directions
+
+    define_directions = ->(direction, prefix = '') {
+      CONSTANT_TO_SYMBOL[eval "Gp#{prefix}#{direction}"] = [:"gp#{prefix}_#{direction}"]
+    }
+
+    ['Left', 'Right', 'Up', 'Down'].each do |d|
+      (0..3).each { |n| define_directions.call(d, n) }
+    end
+
     # Letters, A-Z
     ("A".."Z").each do |letter|
       CONSTANT_TO_SYMBOL[eval("Kb#{letter}")] = [letter.downcase.to_sym]
@@ -102,28 +117,33 @@ module Chingu
 
     # Numbers, 0-9
     (0..9).each do |number|
-      CONSTANT_TO_SYMBOL[eval("Kb#{number.to_s}")] = [number.to_s.to_sym]
+      CONSTANT_TO_SYMBOL[eval("Kb#{number}")] = [:"#{number}"]
     end
 
     # Numpad-numbers, 0-9
     (0..9).each do |number|
-      CONSTANT_TO_SYMBOL[eval("KbNumpad#{number.to_s}")] = ["numpad_#{number.to_s}".to_sym]
+      CONSTANT_TO_SYMBOL[eval("KbNumpad#{number}")] = [:"numpad_#{number}"]
     end
 
     #F-keys, F1-F12
     (1..12).each do |number|
-      CONSTANT_TO_SYMBOL[eval("KbF#{number.to_s}")] = ["f#{number.to_s}".to_sym, "F#{number.to_s}".to_sym]
+      CONSTANT_TO_SYMBOL[eval("KbF#{number}")] = ["f#{number.to_s}".to_sym, :"F#{number}"]
     end
 
     # Gamepad-buttons 0-15
-    (0..15).each do |number|
-      CONSTANT_TO_SYMBOL[eval("GpButton#{number.to_s}")] = [
-        "gamepad_button_#{number.to_s}".to_sym,
-        "gamepad_#{number.to_s}".to_sym,
-        "pad_button_#{number.to_s}".to_sym,
-        "pad_#{number.to_s}".to_sym,
-        "gp_#{number.to_s}".to_sym
+    define_gp_buttons = ->(number, prefix = '') {
+      CONSTANT_TO_SYMBOL[eval("Gp#{prefix}Button#{number}")] = [
+        :"gamepad_button#{prefix}_#{number}",
+        :"gamepad#{prefix}_#{number}",
+        :"pad_button#{prefix}_#{number}",
+        :"pad#{prefix}_#{number}",
+        :"gp#{prefix}_#{number}"
       ]
+    }
+
+    (0..15).each do |number|
+      define_gp_buttons.call(number)
+      (0..3).each { |n| define_gp_buttons.call(number, n) }
     end
 
     #

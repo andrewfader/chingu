@@ -10,10 +10,11 @@ describe Chingu::Input do
 
   it "should map all defined Gosu input constants to Chinu symbols" do
     # Simpler if all the inputs are in a big hash.
-    gosu_inputs.each_value do |code|
-      puts code
+    gosu_inputs.each do |name, code|
+      puts "#{name} - #{code}"
       next if code==0 # todo, check into this, spooner? ;)
       symbols = described_class::CONSTANT_TO_SYMBOL[code]
+
       symbols.should_not be_empty
       symbols.each {|s| s.should be_kind_of Symbol }
     end
