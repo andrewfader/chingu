@@ -9,7 +9,6 @@ Gem::Specification.new do |s|
   s.homepage = "http://ippa.se/chingu"
   s.description = "OpenGL accelerated 2D game framework for Ruby. Builds on Gosu (Ruby/C++) which provides all the core functionality. Chingu adds simple yet powerful game states, prettier input handling, deployment safe asset-handling, a basic re-usable game object and stackable game logic."
   s.summary = "OpenGL accelerated 2D game framework for Ruby."
-  s.required_rubygems_version = ">= 1.3.6"
 
   s.files = Dir.glob("{lib,examples,benchmarks,spec}/**/*") + %w(LICENSE README.rdoc specs.watchr Rakefile LICENSE)
   s.extra_rdoc_files = [ "LICENSE", "README.rdoc" ]
@@ -17,9 +16,7 @@ Gem::Specification.new do |s|
   s.rubyforge_project = "chingu"
 
   s.add_dependency("gosu", [">= 0.9.2"])
-  s.add_runtime_dependency("gosu", [">= 0.9.2"])
   s.add_development_dependency("rspec", [">= 2.1.0"])
   s.add_development_dependency("watchr", [">= 0"])
-#  s.add_development_dependency("rcov", [">= 0"])
 end
 
